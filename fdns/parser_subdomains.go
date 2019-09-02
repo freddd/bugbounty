@@ -102,6 +102,6 @@ func (p *Parser) ParseSubdomains(ctx context.Context, r io.Reader, out chan<- st
 }
 
 // NewTakeoverParser returns a FDNS parser that reports entries for the given record.
-func NewSubdomainParser(domains []string, workers int, f ParseFunc, prefix string, suffix string, contains string) *Parser {
-	return &Parser{domains: domains, parse: f, workers: workers, prefix: prefix, suffix: suffix, contains: contains}
+func NewSubdomainParser(domains []string, workers int, f ParseFunc, prefix string, suffix string, contains string, regexp string) *Parser {
+	return &Parser{domains: domains, parse: f, workers: workers, prefix: prefix, suffix: suffix, contains: contains, regexp: regexp}
 }

@@ -14,12 +14,14 @@ var prefix string
 var suffix string
 var domain string
 var contains string
+var regexp string
 
 func init() {
 	Domain.Flags().StringVarP(&domain, "domain", "", "", "domain")
 	Domain.Flags().StringVarP(&prefix, "prefix", "", "", "prefix")
 	Domain.Flags().StringVarP(&suffix, "suffix", "", "", "suffix")
 	Domain.Flags().StringVarP(&contains, "contains", "", "", "contains")
+	Domain.Flags().StringVarP(&contains, "regexp", "", "", "regexp")
 	Domain.Flags().StringVarP(&path, "path", "", "", "path to file")
 	Domain.Flags().StringVarP(&kind, "kind", "", "", "kind (A|CNAME|NS|PTR)")
 }
@@ -48,7 +50,7 @@ var Domain = &cobra.Command{
 			domains = []string{domain}
 		}
 
-		parser := fdns.NewSubdomainParser(domains, 50, parsers[kind], prefix, suffix, contains)
+		parser := fdns.NewSubdomainParser(domains, 50, parsers[kind], prefix, suffix, contains, regexp)
 		out := make(chan string)
 		errs := make(chan error)
 		done := make(chan struct{})

@@ -52,7 +52,8 @@ type Parser struct {
 	// workers is the numer of simultaneous goroutines the parser will use.
 	workers int
 
-	prefix string
-	suffix string
+	prefix   string
+	suffix   string
 	contains string
+	regexp   string
 }
