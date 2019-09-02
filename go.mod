@@ -3,6 +3,7 @@ module fdns
 go 1.12
 
 require (
+	github.com/Masterminds/semver v1.4.2
 	github.com/cpuguy83/go-md2man v1.0.9-0.20180619205630-691ee98543af // indirect
 	github.com/elazarl/goproxy v0.0.0-20190711103511-473e67f1d7d2 // indirect
 	github.com/elazarl/goproxy/ext v0.0.0-20190711103511-473e67f1d7d2 // indirect

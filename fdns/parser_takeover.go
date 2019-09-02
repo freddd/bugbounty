@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"github.com/parnurzeal/gorequest"
 	"io"
+	"os"
 	"os/exec"
 	"strings"
 )
@@ -79,11 +80,19 @@ func (p *Parser) ParseTakeover(ctx context.Context, r io.Reader, out chan<- stri
 					}
 
 					if s.Verify.Kind == "HTTP" {
-						resp, body, err := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true}).Get(fmt.Sprintf("https://%s", e.Name)).End()
-						if err != nil || resp.StatusCode != s.Verify.Condition {
-							if resp != nil && resp.StatusCode / 100 != 2  && resp.StatusCode != 401 && resp.StatusCode != 403 && resp.StatusCode != 503 && resp.StatusCode != 502 && body != "" {
+						resp, body, httpErrors := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true}).Get(fmt.Sprintf("https://%s", e.Name)).End()
+
+						for _, err := range httpErrors {
+							if os.IsTimeout(err) {
+								resp, body, httpErrors = gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true}).Get(fmt.Sprintf("http://%s", e.Name)).End()
+							}
+						}
+
+						if httpErrors != nil || resp.StatusCode != s.Verify.Condition {
+							if resp != nil && resp.StatusCode / 100 != 2  && resp.StatusCode != 401 && resp.StatusCode != 403 && resp.StatusCode != 503 && resp.StatusCode != 502 {
 								//logger.DefaultLogger.Debug("Name: %s (%s), Status code: %d, body: %s", e.Name, e.Value, resp.StatusCode, body)
 							}
+
 							continue
 						}
 

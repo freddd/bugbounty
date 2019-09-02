@@ -17,7 +17,7 @@ func A(e entry) (string, error) {
 	if e.Type != "a" {
 		return "", ErrWrongType
 	}
-	return fmt.Sprintf("[%s] -> (%s)", e.Name, e.Value), nil
+	return fmt.Sprintf("%s,%s", e.Name, e.Value), nil
 }
 
 // CNAME reports DNS CNAME records for the given domain.
@@ -25,7 +25,7 @@ func CNAME(e entry) (string, error) {
 	if e.Type != "cname" {
 		return "", ErrWrongType
 	}
-	return fmt.Sprintf("[%s] -> (%s)", e.Name, e.Value), nil
+	return fmt.Sprintf("%s,%s", e.Name, e.Value), nil
 }
 
 // NS reports DNS NS records for the given domain.

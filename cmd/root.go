@@ -9,12 +9,11 @@ import (
 
 var path string
 var kind string
+var Verbose bool
 
 func init() {
-	RootCmd.PersistentFlags().StringVarP(&path, "path", "", "", "path to file")
-	RootCmd.PersistentFlags().StringVarP(&kind, "kind", "", "", "kind (A|CNAME|NS|PTR)")
+	RootCmd.PersistentFlags().BoolVarP(&Verbose, "verbose", "v", false, "verbose output")
 }
-
 
 var RootCmd = &cobra.Command{
 	Use:   "fdns",
@@ -60,6 +59,8 @@ func Execute() {
 	RootCmd.AddCommand(completionCmd)
 	RootCmd.AddCommand(Takeover)
 	RootCmd.AddCommand(Domain)
+	RootCmd.AddCommand(Xff)
+	RootCmd.AddCommand(ThirdParty)
 	if err := RootCmd.Execute(); err != nil {
 		logger.DefaultLogger.Fatal("%s", err.Error())
 	}

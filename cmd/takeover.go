@@ -10,13 +10,17 @@ import (
 	"os/signal"
 )
 
+func init() {
+	Takeover.PersistentFlags().StringVarP(&path, "path", "", "", "path to file")
+	Takeover.PersistentFlags().StringVarP(&kind, "kind", "", "", "kind (A|CNAME|NS|PTR)")
+}
 
 var Takeover = &cobra.Command{
 	Use:     "takeover",
 	Short:   "",
 	Aliases: []string{"t"},
 	Run: func(cmd *cobra.Command, args []string) {
-		logger.DefaultLogger.Info("Starting to scan for takeover")
+		logger.DefaultLogger.Debug("Starting to scan for takeover")
 
 		r, err := os.Open(path)
 		if err != nil {

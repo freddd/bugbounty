@@ -40,26 +40,26 @@ func setupLogger() Logger {
 }
 
 func (dl *defaultLogger) Debug(msg string, args ...interface{}) {
-	blue.Fprintf(os.Stdout, prependLevelAppendNewline(debug, msg), args...)
+	blue.Fprintf(os.Stdout, appendNewline(msg), args...)
 }
 
 func (dl *defaultLogger) Info(msg string, args ...interface{}) {
-	green.Fprintf(os.Stdout, prependLevelAppendNewline(info, msg), args...)
+	green.Fprintf(os.Stdout, appendNewline(msg), args...)
 }
 
 func (dl *defaultLogger) Error(msg string, args ...interface{}) {
-	red.Fprintf(os.Stderr, prependLevelAppendNewline(error, msg), args...)
+	red.Fprintf(os.Stderr, appendNewline(msg), args...)
 }
 
 func (dl *defaultLogger) Fatal(msg string, args ...interface{}) {
-	red.Fprintf(os.Stderr, prependLevelAppendNewline(fatal, msg), args...)
+	red.Fprintf(os.Stderr, appendNewline(msg), args...)
 	os.Exit(1)
 }
 
 func (dl *defaultLogger) Warn(msg string, args ...interface{}) {
-	yellow.Fprintf(os.Stdout, prependLevelAppendNewline(warn, msg), args...)
+	yellow.Fprintf(os.Stdout, appendNewline(msg), args...)
 }
 
-func prependLevelAppendNewline(level string, msg string) string {
-	return level + msg + newline
+func appendNewline(msg string) string {
+	return msg + newline
 }

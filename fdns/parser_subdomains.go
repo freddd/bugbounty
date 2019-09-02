@@ -43,7 +43,7 @@ func (p *Parser) ParseSubdomains(ctx context.Context, r io.Reader, out chan<- st
 
 					var matchesDomain = false
 					for _, domain := range p.domains {
-						if strings.HasSuffix(e.Name, domain) {
+						if strings.HasSuffix(e.Name, domain) && !strings.Contains(e.Name, "wpengine") && !strings.Contains(e.Name, "eventbrite") {
 							matchesDomain = true
 							break
 						}

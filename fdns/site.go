@@ -25,6 +25,36 @@ var GithubIO = Site {
 	},
 }
 
+var BitbucketIO = Site {
+	Name: "bitbucket.io",
+	SiteRegex: regexp.MustCompile("bitbucket\\.io"),
+	Verify: Verify {
+		Kind: "HTTP",
+		Condition: 404,
+		Regexp: regexp.MustCompile(`(?m)Repository not found`),
+	},
+}
+
+var BitbucketOrg = Site {
+	Name: "bitbucket.org",
+	SiteRegex: regexp.MustCompile("bitbucket\\.org"),
+	Verify: Verify {
+		Kind: "HTTP",
+		Condition: 404,
+		Regexp: regexp.MustCompile(`(?m)Repository not found`),
+	},
+}
+
+var CampaignMonitor = Site {
+	Name: "campaignmonitor.com",
+	SiteRegex: regexp.MustCompile("campaignmonitor\\.com"),
+	Verify: Verify {
+		Kind: "HTTP",
+		Condition: 404,
+		Regexp: regexp.MustCompile(`(?m)Trying to access your account`),
+	},
+}
+
 var FeedPress = Site {
 	Name: "feedpress.me",
 	SiteRegex: regexp.MustCompile("feedpress\\.me"),
@@ -452,8 +482,7 @@ var VulnerableSites = []Site {
 	AWSDualStack,
 	AWSGeneric,
 	AWSGenericWithCountry,
-	AWSWebsite,
-	WordPress,
+	AWSWebsite, WordPress,
 	Tumblr,
 	Strikingly,
 	FlyIO,
@@ -487,6 +516,9 @@ var VulnerableSites = []Site {
 	VisualStudio,
 	TrafficManager,
 	Heroku,
+	CampaignMonitor,
+	BitbucketIO,
+	BitbucketOrg,
 	//Fastly,
 	//TeamTailor,
 }
