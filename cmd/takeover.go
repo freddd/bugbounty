@@ -1,9 +1,9 @@
 package cmd
 
 import (
+	"bugbounty/fdns"
+	"bugbounty/logger"
 	"context"
-	"fdns/fdns"
-	"fdns/logger"
 	"fmt"
 	"github.com/spf13/cobra"
 	"os"

@@ -1,8 +1,8 @@
 package third_party
 
 import (
+	"bugbounty/logger"
 	"crypto/tls"
-	"fdns/logger"
 	"fmt"
 	"github.com/Masterminds/semver"
 	"github.com/parnurzeal/gorequest"
@@ -27,7 +27,7 @@ var Nexus = Target{
 	Name: "Nexus Repository",
 	Vulnerabilities: []Vulnerability{
 		{
-			Condition: 204,
+			Condition:   204,
 			Description: "Default credentials usernames/password",
 			Check: func(domain string) {
 				//logger.DefaultLogger.Debug("%s: Credentials (nexus) - starting", domain)
@@ -66,14 +66,12 @@ var Nexus = Target{
 					return
 				}
 
-				sanitized := unsanitized[strings.LastIndex(unsanitized, "_v=") + 3:strings.Index(unsanitized, "-")]
-
+				sanitized := unsanitized[strings.LastIndex(unsanitized, "_v=")+3 : strings.Index(unsanitized, "-")]
 
 				v, err := semver.NewVersion(sanitized)
 				if err != nil {
 					logger.DefaultLogger.Error("domain: %s, %+v (%s)", domain, err, unsanitized)
 				}
-
 
 				if v.LessThan(vulnerableVersion) {
 					logger.DefaultLogger.Info("Domain: %s is vulnerable potentially vulnerable to RCE (CVE-2019-7238)", domain)
@@ -87,7 +85,7 @@ var Artifactory = Target{
 	Name: "JFrog Artifactory",
 	Vulnerabilities: []Vulnerability{
 		{
-			Condition: 200,
+			Condition:   200,
 			Description: "Default admin credentials usernames/password (CVE-2019-9733)",
 			Check: func(domain string) {
 				logger.DefaultLogger.Debug("%s: CVE-2019-9733 (jfrog) - starting", domain)
@@ -105,6 +103,7 @@ var Artifactory = Target{
 		},
 	},
 }
+
 /*
 var Jira = Target{
 	Name: "Atlassian Jira",
@@ -120,7 +119,7 @@ var Jenkins = Target{
 	Name: "Jenkins CI",
 	Vulnerabilities: []Vulnerability{
 		{
-			Condition: 200,
+			Condition:   200,
 			Description: "CVE-2018-1000861 (Jenkins version < 2.138)",
 			Check: func(domain string) {
 				vulnerableVersion, err := semver.NewVersion("2.138")
@@ -154,7 +153,7 @@ func execute(domain string) (gorequest.Response, string, []error) {
 		New().
 		TLSClientConfig(&tls.Config{InsecureSkipVerify: true}).
 		Get(fmt.Sprintf("https://%s", domain)).
-		Timeout(3*time.Second).
+		Timeout(3 * time.Second).
 		End()
 
 	for _, err := range httpErrors {
@@ -163,7 +162,7 @@ func execute(domain string) (gorequest.Response, string, []error) {
 				New().
 				TLSClientConfig(&tls.Config{InsecureSkipVerify: true}).
 				Get(fmt.Sprintf("http://%s", domain)).
-				Timeout(3*time.Second).
+				Timeout(3 * time.Second).
 				End()
 		}
 	}
@@ -186,7 +185,7 @@ func nexusLoginRequest(protocol string, domain string, username string, password
 		Set("user-agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Safari/537.36").
 		Set("referer", fmt.Sprintf("%s://%s/", protocol, domain)).
 		Type("form").
-		Timeout(3*time.Second).
+		Timeout(3 * time.Second).
 		SendMap(map[string]string{"username": username, "password": password})
 }
 
@@ -198,16 +197,16 @@ func artifactoryLoginRequest(protocol string, domain string, username string, pa
 		Type("json").
 		Set("X-Forwarded-For", "127.0.0.1").
 		Set("Sec-Fetch-Mode", "cors").
-		Set("Sec-Fetch-Site","same-origin").
+		Set("Sec-Fetch-Site", "same-origin").
 		Set("X-Requested-With", "artUI").
 		Set("Request-Agent", "artifactoryUI").
 		Set("referer", fmt.Sprintf("%s://%s/artifactory/webapp/", protocol, domain)).
 		Set("origin", fmt.Sprintf("%s://%s", protocol, domain)).
 		Set("accept", "*/*").
-		Set("serial",  "61").
+		Set("serial", "61").
 		Set("authority", domain).
 		Set("user-agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Safari/537.36").
-		Timeout(3*time.Second).
+		Timeout(3 * time.Second).
 		Send(fmt.Sprintf(`{"user": "%s", "password": "%s", "type":"login"}`, username, password))
 }
 
@@ -252,7 +251,7 @@ func checkDefaultUsernameAndPasswordInArtifactory(domain string, username string
 }
 
 var Targets = map[string]Target{
-	"Nexus": Nexus,
+	"Nexus":       Nexus,
 	"Artifactory": Artifactory,
-	"Jenkins": Jenkins,
+	"Jenkins":     Jenkins,
 }

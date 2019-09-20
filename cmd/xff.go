@@ -1,10 +1,10 @@
 package cmd
 
 import (
+	"bugbounty/ipv4"
+	"bugbounty/logger"
 	"context"
 	"crypto/tls"
-	"fdns/ipv4"
-	"fdns/logger"
 	"fmt"
 	"github.com/parnurzeal/gorequest"
 	"github.com/spf13/cobra"
@@ -22,7 +22,6 @@ func init() {
 	Xff.Flags().Int64VarP(&contentLength, "content-length", "", 10000000, "content-length")
 	Xff.Flags().StringVarP(&cidr, "cidr", "", "", "192.168.0.0/23")
 }
-
 
 var Xff = &cobra.Command{
 	Use:     "xff",

@@ -72,7 +72,7 @@ var Domains = []string{
 	".creditkarma.ca",
 	".danskebank.com",
 	".danskebank.dk",
-	".june.dk", // danske bank
+	".june.dk",   // danske bank
 	".sunday.dk", // danske bank
 	".discordapp.com",
 	".dailymotion.com",
@@ -219,14 +219,14 @@ var Domains = []string{
 	".rubygems.org",
 	".revolut.com",
 	".saasm2.com", // visma
-	".saima.fi", // visma
+	".saima.fi",   // visma
 	".salesforce.com",
 	".sas.dk",
 	".sas.no",
 	".sas.se",
 	".savedroid.com",
 	".savedroid.de",
-	".schibsted.io",
+	//".schibsted.io",
 	".scrive.com",
 	".seek.com.au",
 	".segment.com",
@@ -235,7 +235,7 @@ var Domains = []string{
 	".shipt.com",
 	".skinfra.xyz",
 	".skyscanner.net",
-	".slack.com",
+	//".slack.com", too many false positives
 	".snapchat.com",
 	".snyk.io",
 	".sol-data.com",
@@ -335,9 +335,9 @@ var Domains = []string{
 	".magicleap.com",
 	".yahoo.com",
 	//".tumblr.com", too many false positives
-	".flurry.com", // yahoo
-	".makers.com", // yahoo
-	".buildseries.com", // yahoo
+	".flurry.com",       // yahoo
+	".makers.com",       // yahoo
+	".buildseries.com",  // yahoo
 	".builtbygirls.com", // yahoo
 	".slack.com",
 	".khanacademy.org",
@@ -436,4 +436,18 @@ var Domains = []string{
 	".getswish.se",
 	".setapp.com",
 	".zellepay.com",
+	".dyson.com",
+	".dyson.se",
+	".healthifyme.com",
+	".spell.run",
+	".amitree.com",
+	".buildkite.com",
+	".nintendowifi.net",
+	".nintendo.com",
+	".nintendo.net",
+	".preceda.com.au",
+	".nintendo.com.au",
+	".embark.games",
+	".embark-studios.com",
+	".mbrk.io",
 }

@@ -1,9 +1,9 @@
 package cmd
 
 import (
+	"bugbounty/fdns"
+	"bugbounty/logger"
 	"context"
-	"fdns/fdns"
-	"fdns/logger"
 	"fmt"
 	"github.com/spf13/cobra"
 	"os"
@@ -21,7 +21,7 @@ func init() {
 	Domain.Flags().StringVarP(&prefix, "prefix", "", "", "prefix")
 	Domain.Flags().StringVarP(&suffix, "suffix", "", "", "suffix")
 	Domain.Flags().StringVarP(&contains, "contains", "", "", "contains")
-	Domain.Flags().StringVarP(&contains, "regexp", "", "", "regexp")
+	Domain.Flags().StringVarP(&regexp, "regexp", "", "", "regexp")
 	Domain.Flags().StringVarP(&path, "path", "", "", "path to file")
 	Domain.Flags().StringVarP(&kind, "kind", "", "", "kind (A|CNAME|NS|PTR)")
 }
@@ -31,7 +31,7 @@ var Domain = &cobra.Command{
 	Short:   "",
 	Aliases: []string{"d"},
 	Run: func(cmd *cobra.Command, args []string) {
-		logger.DefaultLogger.Debug("Starting to scan for domain: prefix: %s, suffix: %s, contains: %s", prefix, suffix, contains)
+		logger.DefaultLogger.Debug("Starting to scan for domain: prefix: %s, suffix: %s, contains: %s, regexp: %s", prefix, suffix, contains, regexp)
 
 		r, err := os.Open(path)
 		if err != nil {

@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"fdns/logger"
+	"bugbounty/logger"
 	"github.com/spf13/cobra"
 	"github.com/spf13/cobra/doc"
 	"strings"
@@ -16,10 +16,10 @@ func init() {
 }
 
 var RootCmd = &cobra.Command{
-	Use:   "fdns",
-	Short: "fdns",
+	Use:   "bugbounty",
+	Short: "bb",
 	Long: strings.Join([]string{
-		"fdns",
+		"bugbounty",
 		"",
 	}, "\n"),
 	PersistentPreRun: func(cmd *cobra.Command, args []string) {
@@ -57,8 +57,7 @@ var docsCmd = &cobra.Command{
 func Execute() {
 	RootCmd.AddCommand(docsCmd)
 	RootCmd.AddCommand(completionCmd)
-	RootCmd.AddCommand(Takeover)
-	RootCmd.AddCommand(Domain)
+	RootCmd.AddCommand(FdnsCmd)
 	RootCmd.AddCommand(Xff)
 	RootCmd.AddCommand(ThirdParty)
 	if err := RootCmd.Execute(); err != nil {

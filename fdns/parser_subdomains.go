@@ -2,14 +2,15 @@ package fdns
 
 import (
 	"bufio"
+	"bugbounty/logger"
 	"compress/gzip"
 	"context"
 	"encoding/json"
 	"fmt"
 	"io"
+	"regexp"
 	"strings"
 )
-
 
 // Should refactor
 func (p *Parser) ParseSubdomains(ctx context.Context, r io.Reader, out chan<- string, errs chan<- error) {
@@ -55,10 +56,20 @@ func (p *Parser) ParseSubdomains(ctx context.Context, r io.Reader, out chan<- st
 
 					if p.prefix != "" && !strings.HasPrefix(e.Name, p.prefix) {
 						continue
-					} else  if p.suffix != "" && !strings.HasSuffix(e.Name, p.suffix) {
+					} else if p.suffix != "" && !strings.HasSuffix(e.Name, p.suffix) {
 						continue
 					} else if p.contains != "" && !strings.Contains(e.Name, p.contains) {
 						continue
+					} else if p.regexp != "" {
+						match, err := regexp.Match(p.regexp, []byte(e.Name))
+						if err != nil {
+							logger.DefaultLogger.Error(fmt.Sprintf("%+v", err))
+							break
+						}
+
+						if !match {
+							continue
+						}
 					}
 
 					rec, err := p.parse(e)

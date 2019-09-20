@@ -14,7 +14,6 @@ import (
 	"strings"
 )
 
-
 // Should refactor
 func (p *Parser) ParseTakeover(ctx context.Context, r io.Reader, out chan<- string, errs chan<- error) {
 	defer close(out)
@@ -89,7 +88,7 @@ func (p *Parser) ParseTakeover(ctx context.Context, r io.Reader, out chan<- stri
 						}
 
 						if httpErrors != nil || resp.StatusCode != s.Verify.Condition {
-							if resp != nil && resp.StatusCode / 100 != 2  && resp.StatusCode != 401 && resp.StatusCode != 403 && resp.StatusCode != 503 && resp.StatusCode != 502 {
+							if resp != nil && resp.StatusCode/100 != 2 && resp.StatusCode != 401 && resp.StatusCode != 403 && resp.StatusCode != 503 && resp.StatusCode != 502 {
 								//logger.DefaultLogger.Debug("Name: %s (%s), Status code: %d, body: %s", e.Name, e.Value, resp.StatusCode, body)
 							}
 

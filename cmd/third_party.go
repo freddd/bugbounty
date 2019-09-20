@@ -2,9 +2,9 @@ package cmd
 
 import (
 	"bufio"
+	"bugbounty/logger"
+	"bugbounty/third_party"
 	"context"
-	"fdns/logger"
-	"fdns/third_party"
 	"fmt"
 	"github.com/spf13/cobra"
 	"os"
@@ -128,7 +128,6 @@ func executeScan(hosts []string, targets map[string]third_party.Target, workers 
 		<-finished
 	}
 }
-
 
 func readLines(path string) ([]string, error) {
 	file, err := os.Open(path)

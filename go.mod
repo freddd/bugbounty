@@ -1,4 +1,4 @@
-module fdns
+module bugbounty
 
 go 1.12
 

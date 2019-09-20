@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fdns/cmd"
+	"bugbounty/cmd"
 )
 
 func main() {

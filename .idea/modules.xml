@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/fdns.iml" filepath="$PROJECT_DIR$/.idea/fdns.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/bugbounty.iml" filepath="$PROJECT_DIR$/.idea/bugbounty.iml" />
     </modules>
   </component>
 </project>
