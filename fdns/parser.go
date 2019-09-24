@@ -56,4 +56,5 @@ type Parser struct {
 	suffix   string
 	contains string
 	regexp   string
+	value 	 bool
 }

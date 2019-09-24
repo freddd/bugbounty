@@ -10,6 +10,7 @@ import (
 var path string
 var kind string
 var Verbose bool
+var domains string
 
 func init() {
 	RootCmd.PersistentFlags().BoolVarP(&Verbose, "verbose", "v", false, "verbose output")
@@ -60,6 +61,7 @@ func Execute() {
 	RootCmd.AddCommand(FdnsCmd)
 	RootCmd.AddCommand(Xff)
 	RootCmd.AddCommand(ThirdParty)
+	RootCmd.AddCommand(GetCmd)
 	if err := RootCmd.Execute(); err != nil {
 		logger.DefaultLogger.Fatal("%s", err.Error())
 	}

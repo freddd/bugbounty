@@ -184,6 +184,36 @@ var MyJetBrains = Site{
 	},
 }
 
+var CannyIO = Site{
+	Name:      "canny.io",
+	SiteRegex: regexp.MustCompile("canny\\.io"),
+	Verify: Verify{
+		Kind:      "HTTP",
+		Condition: 404,
+		Regexp:    regexp.MustCompile(`(?m)There is no such company`),
+	},
+}
+
+var HelpRace = Site{
+	Name:      "helprace.com",
+	SiteRegex: regexp.MustCompile("helprace\\.com"),
+	Verify: Verify{
+		Kind:      "HTTP",
+		Condition: 404,
+		Regexp:    regexp.MustCompile(`(?m)Alias not configured`),
+	},
+}
+
+var Landingi = Site{
+	Name:      "landingi.com",
+	SiteRegex: regexp.MustCompile("landingi\\.com"),
+	Verify: Verify{
+		Kind:      "HTTP",
+		Condition: 404,
+		Regexp:    regexp.MustCompile(`(?m)It looks like`),
+	},
+}
+
 var ReadmeIO = Site{
 	Name:      "readme.io",
 	SiteRegex: regexp.MustCompile("readme\\.io"),
@@ -519,4 +549,7 @@ var VulnerableSites = []Site{
 	BitbucketOrg,
 	//Fastly,
 	TeamTailor,
+	CannyIO,
+	HelpRace,
+
 }

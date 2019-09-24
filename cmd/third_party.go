@@ -1,9 +1,9 @@
 package cmd
 
 import (
-	"bufio"
 	"bugbounty/logger"
 	"bugbounty/third_party"
+	"bugbounty/util"
 	"context"
 	"fmt"
 	"github.com/spf13/cobra"
@@ -12,7 +12,6 @@ import (
 	"strings"
 )
 
-var domains string
 var target string
 
 func init() {
@@ -37,15 +36,7 @@ var ThirdParty = &cobra.Command{
 		if domains != "" {
 			hosts = strings.Split(domains, ",")
 		} else if path != "" {
-			lines, err := readLines(path)
-			if err != nil {
-				logger.DefaultLogger.Error("%+v", err)
-			}
-
-			// assumes that it's a CSV with host,ip (ignoring ip)
-			for _, line := range lines {
-				hosts = append(hosts, strings.Split(line, ",")[0])
-			}
+			hosts = util.GetListOfDomainsFromFile(path)
 		}
 
 		out := make(chan string)
@@ -127,19 +118,4 @@ func executeScan(hosts []string, targets map[string]third_party.Target, workers 
 	for i := 0; i < workers; i++ {
 		<-finished
 	}
-}
-
-func readLines(path string) ([]string, error) {
-	file, err := os.Open(path)
-	if err != nil {
-		return nil, err
-	}
-	defer file.Close()
-
-	var lines []string
-	scanner := bufio.NewScanner(file)
-	for scanner.Scan() {
-		lines = append(lines, scanner.Text())
-	}
-	return lines, scanner.Err()
 }

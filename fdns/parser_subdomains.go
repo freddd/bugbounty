@@ -44,7 +44,7 @@ func (p *Parser) ParseSubdomains(ctx context.Context, r io.Reader, out chan<- st
 
 					var matchesDomain = false
 					for _, domain := range p.domains {
-						if strings.HasSuffix(e.Name, domain) && !strings.Contains(e.Name, "wpengine") && !strings.Contains(e.Name, "eventbrite") {
+						if strings.HasSuffix(e.Name, domain) {
 							matchesDomain = true
 							break
 						}
@@ -53,15 +53,20 @@ func (p *Parser) ParseSubdomains(ctx context.Context, r io.Reader, out chan<- st
 					if !matchesDomain {
 						continue
 					}
+					
+					toBeMatched := e.Name
+					if p.value {
+						toBeMatched = e.Value
+					}
 
-					if p.prefix != "" && !strings.HasPrefix(e.Name, p.prefix) {
+					if p.prefix != "" && !strings.HasPrefix(toBeMatched, p.prefix) {
 						continue
-					} else if p.suffix != "" && !strings.HasSuffix(e.Name, p.suffix) {
+					} else if p.suffix != "" && !strings.HasSuffix(toBeMatched, p.suffix) {
 						continue
-					} else if p.contains != "" && !strings.Contains(e.Name, p.contains) {
+					} else if p.contains != "" && !strings.Contains(toBeMatched, p.contains) {
 						continue
 					} else if p.regexp != "" {
-						match, err := regexp.Match(p.regexp, []byte(e.Name))
+						match, err := regexp.Match(p.regexp, []byte(toBeMatched))
 						if err != nil {
 							logger.DefaultLogger.Error(fmt.Sprintf("%+v", err))
 							break
@@ -113,6 +118,6 @@ func (p *Parser) ParseSubdomains(ctx context.Context, r io.Reader, out chan<- st
 }
 
 // NewTakeoverParser returns a FDNS parser that reports entries for the given record.
-func NewSubdomainParser(domains []string, workers int, f ParseFunc, prefix string, suffix string, contains string, regexp string) *Parser {
-	return &Parser{domains: domains, parse: f, workers: workers, prefix: prefix, suffix: suffix, contains: contains, regexp: regexp}
+func NewSubdomainParser(domains []string, workers int, f ParseFunc, prefix string, suffix string, contains string, regexp string, value bool) *Parser {
+	return &Parser{domains: domains, parse: f, workers: workers, prefix: prefix, suffix: suffix, contains: contains, regexp: regexp, value: value}
 }
