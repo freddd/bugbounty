@@ -1,3 +1,5 @@
 .DS_Store
 .idea
-fdns/domain.go # should be extracted as config
+
+# should be extracted as config
+fdns/domain.go
